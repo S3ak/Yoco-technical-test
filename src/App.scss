@@ -1,3 +1,77 @@
-.App {
-  text-align: center;
+:root {
+  --main-bg-color: #ebeff7;
+  --border-color: #565e73;
+  --al-bg-color: 565e73;
+  --text-color: #6d6360;
+  --text-alt-color: #2e3b64;
+  --font-family: "Helvetica, Arial, sans-serif";
+  --font-family-heading: "monanco, Helvetica, Arial, sans-serif";
+  --font-size-base: 14px;
+  --font-size-l1: 16px;
+  --font-size-l2: 20px;
+  --font-size-l3: 32px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  border: 0;
+  outline: 0;
+  font-size: 100%;
+  vertical-align: baseline;
+  background: transparent;
+  box-sizing: border-box;
+}
+
+html,
+#root,
+body {
+  height: 100%;
+  overflow-x: hidden;
+  font-family: var(--font-family);
+}
+
+.l-app {
+  display: flex;
+
+  &_col {
+    flex: 1 1 auto;
+  }
+
+  &_col--first {
+    flex: 1 1 65%;
+    min-width: 400px;
+    background: green;
+  }
+
+  &_col--last {
+    flex: 1 1 auto;
+    min-width: 220px;
+    background: red;
+  }
+}
+
+.c-cal {
+  min-width: 400px;
+  height: 400px;
+
+  &_display {
+  }
+}
+
+.c-charge-list {
+  &_container {
+  }
+
+  &_list {
+  }
+
+  &_diver {
+  }
+}
+
+.c-currency-symbol {
+}
+
+.c-amount {
 }
