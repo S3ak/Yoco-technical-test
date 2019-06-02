@@ -15,7 +15,7 @@ const mockEntries = [1.23, 4.56, 7.89];
 // }
 
 function getSum(total, num) {
-  return total + Math.round(num);
+  return total + Math.round(num.val);
 }
 
 function App() {
@@ -25,7 +25,14 @@ function App() {
 
   const handleAddNewEntry = () => {
     if (currentVal && currentVal !== "0.00") {
-      setChargeEntries(prevVal => [...prevVal, parseFloat(currentVal)]);
+      setChargeEntries(prevVal => [
+        ...prevVal,
+        {
+          // TODO: Id's like this are not safe
+          id: `${currentVal}-${Math.random()}`,
+          val: parseFloat(currentVal)
+        }
+      ]);
       setCurrentVal("0.00");
     }
   };
@@ -48,6 +55,11 @@ function App() {
         return prevVal.toString().slice(0, -1);
       });
     }
+  };
+
+  const handleRemoveEntry = c => {
+    const newArray = chargeEntries.filter(entry => entry.id !== c.id);
+    setChargeEntries(newArray);
   };
 
   useEffect(() => {
@@ -80,12 +92,14 @@ function App() {
             >
               ❌
             </div>
+
             <div
               onClick={handleKeypadEntry}
               className="c-keypad_digit c-keypad_digit--0"
             >
               0
             </div>
+
             <div
               className="c-keypad_digit c-keypad_digit--accept"
               onClick={handleAddNewEntry}
@@ -100,9 +114,14 @@ function App() {
         <div className="c-charge-section_container">
           <ul className="c-charge-section_list">
             {chargeEntries.map((c, idx) => (
-              <li key={`${idx}-${Math.random()}`}>
+              <li
+                key={c.id}
+                onClick={() => {
+                  handleRemoveEntry(c);
+                }}
+              >
                 <CurrencySymbol />
-                <span>{c}</span>
+                <span>{c.val}</span>
               </li>
             ))}
           </ul>
