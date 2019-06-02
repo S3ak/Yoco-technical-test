@@ -18,13 +18,31 @@ function getSum(total, num) {
 }
 
 function App() {
-  const [currentVal, setCurrentVal] = useState(0.0);
+  const [currentVal, setCurrentVal] = useState("0.00");
   const [chargeEntries, setChargeEntries] = useState(mockEntries);
   const [totalEntriesVal, setTotalEntriesVal] = useState();
 
   const handleAddNewEntry = () => {
-    setChargeEntries(prevVal => [...prevVal, currentVal]);
-    setCurrentVal(0);
+    setChargeEntries(prevVal => [...prevVal, parseFloat(currentVal)]);
+    setCurrentVal("0.00");
+  };
+
+  const handleKeypadEntry = e => {
+    if (!e || !e.target.innerText) {
+      return;
+    }
+
+    const digit = e.target.innerText.toString();
+
+    return !currentVal || currentVal === "0.00"
+      ? setCurrentVal(digit)
+      : setCurrentVal(currentVal + digit);
+  };
+
+  const handleRemoveLastKeypadEnty = () => {
+    setCurrentVal(prevVal => {
+      return prevVal.toString().slice(0, -1);
+    });
   };
 
   useEffect(() => {
@@ -44,21 +62,75 @@ function App() {
 
           <div className="c-cal_keypad">
             <div
-              onClick={e => setCurrentVal(val => val + 1)}
+              onClick={handleKeypadEntry}
+              name="1"
               className="c-keypad_digit c-keypad_digit--1"
             >
               1
             </div>
-            <div className="c-keypad_digit c-keypad_digit--2">2</div>
-            <div className="c-keypad_digit c-keypad_digit--3">3</div>
-            <div className="c-keypad_digit c-keypad_digit--4">4</div>
-            <div className="c-keypad_digit c-keypad_digit--5">5</div>
-            <div className="c-keypad_digit c-keypad_digit--6">6</div>
-            <div className="c-keypad_digit c-keypad_digit--7">7</div>
-            <div className="c-keypad_digit c-keypad_digit--8">8</div>
-            <div className="c-keypad_digit c-keypad_digit--9">9</div>
-            <div className="c-keypad_digit c-keypad_digit--cancel">❌</div>
-            <div className="c-keypad_digit c-keypad_digit--0">0</div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--2"
+            >
+              2
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--3"
+            >
+              3
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--4"
+            >
+              4
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--5"
+            >
+              5
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--6"
+            >
+              6
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--7"
+            >
+              7
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              className="c-keypad_digit c-keypad_digit--8"
+            >
+              8
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              name="2"
+              className="c-keypad_digit c-keypad_digit--9"
+            >
+              9
+            </div>
+            <div
+              onClick={handleRemoveLastKeypadEnty}
+              name="2"
+              className="c-keypad_digit c-keypad_digit--cancel"
+            >
+              ❌
+            </div>
+            <div
+              onClick={handleKeypadEntry}
+              name="2"
+              className="c-keypad_digit c-keypad_digit--0"
+            >
+              0
+            </div>
             <div
               className="c-keypad_digit c-keypad_digit--accept"
               onClick={handleAddNewEntry}
