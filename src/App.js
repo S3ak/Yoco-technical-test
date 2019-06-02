@@ -22,6 +22,11 @@ function App() {
   const [chargeEntries, setChargeEntries] = useState(mockEntries);
   const [totalEntriesVal, setTotalEntriesVal] = useState();
 
+  const handleAddNewEntry = () => {
+    setChargeEntries(prevVal => [...prevVal, currentVal]);
+    setCurrentVal(0);
+  };
+
   useEffect(() => {
     if (chargeEntries) {
       setTotalEntriesVal(chargeEntries.reduce(getSum, 0));
@@ -54,7 +59,12 @@ function App() {
             <div className="c-keypad_digit c-keypad_digit--9">9</div>
             <div className="c-keypad_digit c-keypad_digit--cancel">❌</div>
             <div className="c-keypad_digit c-keypad_digit--0">0</div>
-            <div className="c-keypad_digit c-keypad_digit--accept">✅</div>
+            <div
+              className="c-keypad_digit c-keypad_digit--accept"
+              onClick={handleAddNewEntry}
+            >
+              ✅
+            </div>
           </div>
         </div>
       </article>
