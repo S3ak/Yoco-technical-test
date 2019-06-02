@@ -2,6 +2,7 @@ import React from "react";
 import "./App.scss";
 
 import CurrencySymbol from "./components/CurrencySymbol/index";
+import KeypadDigit from "./components/KeypadDigit";
 
 const { useState, useEffect } = React;
 
@@ -19,7 +20,7 @@ function getSum(total, num) {
 
 function App() {
   const [currentVal, setCurrentVal] = useState("0.00");
-  const [chargeEntries, setChargeEntries] = useState(mockEntries);
+  const [chargeEntries, setChargeEntries] = useState([]);
   const [totalEntriesVal, setTotalEntriesVal] = useState();
 
   const handleAddNewEntry = () => {
@@ -40,9 +41,11 @@ function App() {
   };
 
   const handleRemoveLastKeypadEnty = () => {
-    setCurrentVal(prevVal => {
-      return prevVal.toString().slice(0, -1);
-    });
+    if (currentVal && currentVal !== "0.00") {
+      setCurrentVal(prevVal => {
+        return prevVal.toString().slice(0, -1);
+      });
+    }
   };
 
   useEffect(() => {
@@ -61,72 +64,22 @@ function App() {
           </div>
 
           <div className="c-cal_keypad">
-            <div
-              onClick={handleKeypadEntry}
-              name="1"
-              className="c-keypad_digit c-keypad_digit--1"
-            >
-              1
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--2"
-            >
-              2
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--3"
-            >
-              3
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--4"
-            >
-              4
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--5"
-            >
-              5
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--6"
-            >
-              6
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--7"
-            >
-              7
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              className="c-keypad_digit c-keypad_digit--8"
-            >
-              8
-            </div>
-            <div
-              onClick={handleKeypadEntry}
-              name="2"
-              className="c-keypad_digit c-keypad_digit--9"
-            >
-              9
-            </div>
+            {[1, 2, 3, 4, 5, 6, 7, 8, 9].map(digit => (
+              <KeypadDigit
+                digit={digit}
+                key={digit}
+                handleOnClick={handleKeypadEntry}
+              />
+            ))}
+
             <div
               onClick={handleRemoveLastKeypadEnty}
-              name="2"
               className="c-keypad_digit c-keypad_digit--cancel"
             >
               ❌
             </div>
             <div
               onClick={handleKeypadEntry}
-              name="2"
               className="c-keypad_digit c-keypad_digit--0"
             >
               0
