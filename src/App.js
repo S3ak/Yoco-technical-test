@@ -24,8 +24,10 @@ function App() {
   const [totalEntriesVal, setTotalEntriesVal] = useState();
 
   const handleAddNewEntry = () => {
-    setChargeEntries(prevVal => [...prevVal, parseFloat(currentVal)]);
-    setCurrentVal("0.00");
+    if (currentVal && currentVal !== "0.00") {
+      setChargeEntries(prevVal => [...prevVal, parseFloat(currentVal)]);
+      setCurrentVal("0.00");
+    }
   };
 
   const handleKeypadEntry = e => {

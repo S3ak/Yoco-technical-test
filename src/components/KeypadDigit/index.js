@@ -18,5 +18,5 @@ export default function KeypadDigit({ handleOnClick, digit }) {
 
 KeypadDigit.propTypes = {
   handleOnClick: PropTypes.func,
-  digit: PropTypes.string
+  digit: PropTypes.number
 };
